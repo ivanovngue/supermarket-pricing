@@ -23,7 +23,7 @@ class TestCart {
 
     @BeforeAll
     public static void init() {
-        stock.when(Stock::getAllProductsInStock).thenReturn(getProductsInStock());
+        stock.when(Stock::getAllProductsInStock).thenReturn(getProducts());
         stock.when(Stock::getAllProductPromotions).thenReturn(getPromotions());
     }
 
@@ -45,7 +45,21 @@ class TestCart {
         Assertions.assertFalse(Cart.addProductToCart("C", 2));
     }
 
-    private static Map<Product, Integer> getProductsInStock() {
+    @Test
+    @DisplayName("Should return true because, product 'A' exists in cart.")
+    void testWhenRemoveProductFromCart_thenProductIsRemoved_becauseItIsExist() {
+        Cart.setShoppingCart(getProducts());
+        Assertions.assertTrue(Cart.removeProductFromCart("A", 1));
+    }
+
+    @Test
+    @DisplayName("Should return false because, product 'X' doesn't exist in cart.")
+    void testWhenRemoveProductFromCart_thenProductIsNotRemoved_becauseDoesNotExist() {
+        Cart.setShoppingCart(getProducts());
+        Assertions.assertFalse(Cart.removeProductFromCart("X", 1));
+    }
+
+    private static Map<Product, Integer> getProducts() {
         Map<Product, Integer> products = new HashMap<>();
         products.put(new Product("A", "pound", 2.5), 10);
         products.put(new Product("B", "unit", 1.0), 8);

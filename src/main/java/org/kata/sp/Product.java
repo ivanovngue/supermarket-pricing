@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * This class is product DTO
+ *
+ * @author Ivan
+ */
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor
