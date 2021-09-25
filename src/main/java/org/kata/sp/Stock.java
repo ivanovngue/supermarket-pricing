@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is used to define stock and promotion
+ *
+ * @author Ivan
+ */
 public class Stock {
 
     private Stock() {
