@@ -59,6 +59,15 @@ class TestCart {
         Assertions.assertFalse(Cart.removeProductFromCart("X", 1));
     }
 
+    @Test
+    @DisplayName("Should return empty shopping cart.")
+    void testWhenEmptyCart() {
+        Cart.setShoppingCart(getProducts());
+        Assertions.assertTrue(Cart.getShoppingCart().size() > 0);
+        Cart.emptyCart();
+        Assertions.assertEquals(0, Cart.getShoppingCart().size());
+    }
+
     private static Map<Product, Integer> getProducts() {
         Map<Product, Integer> products = new HashMap<>();
         products.put(new Product("A", "pound", 2.5), 10);
