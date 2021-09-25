@@ -47,6 +47,10 @@ public class Cart {
         return hasBeenRemoved;
     }
 
+    public static void emptyCart() {
+        shoppingCart.clear();
+    }
+
     private static Product getProductFromStockIfExist(String productName, int quantity) {
         return getProductFromMapIfExist(Stock.getAllProductsInStock(), productName, quantity);
     }
