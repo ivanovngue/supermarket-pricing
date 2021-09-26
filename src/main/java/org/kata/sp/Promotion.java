@@ -2,6 +2,7 @@ package org.kata.sp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * This class is promotion DTO
@@ -10,6 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
+@ToString
 public class Promotion {
     private int quantity;
     private double priceQuantity;
