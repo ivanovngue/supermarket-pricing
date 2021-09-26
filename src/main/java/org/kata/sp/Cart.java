@@ -69,10 +69,10 @@ public class Cart {
                 // Promotion exists if true
                 if (nameOfProductInPromotion.equalsIgnoreCase(nameOfProductInCart)) {
                     hasPromotion = true;
-                    if (quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion == 0) {
+                    if (isPromotionQuantityEqualsProductQuantity(quantityOfProductInCart, quantityOfProductInPromotion)) {
                         int occurrenceOfPromotion = quantityOfProductInCart / quantityOfProductInPromotion;
                         totalOfCart = totalOfCart + priceOfProductInPromotion * occurrenceOfPromotion;
-                    } else if (quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion != 0) {
+                    } else if (isPromotionQuantityNotEqualsProductQuantity(quantityOfProductInCart, quantityOfProductInPromotion)) {
                         int occurrenceOfPromotion = quantityOfProductInCart % quantityOfProductInPromotion;
                         totalOfCart = totalOfCart + priceOfProductInPromotion * occurrenceOfPromotion
                                 + (quantityOfProductInCart - occurrenceOfPromotion * quantityOfProductInPromotion) * unitPriceOfProductInCart;
@@ -87,14 +87,6 @@ public class Cart {
             hasPromotion = false;
         }
         return totalOfCart;
-    }
-
-    public static void reviewCart() {
-        shoppingCart.entrySet().forEach(System.out::println);
-    }
-
-    public static void reviewPromotion() {
-        Stock.getAllProductPromotions().forEach(System.out::println);
     }
 
     private static Product getProductFromStockIfExist(String productName, int quantity) {
@@ -115,5 +107,13 @@ public class Cart {
             }
         }
         return product;
+    }
+
+    private static boolean isPromotionQuantityEqualsProductQuantity(int quantityOfProductInCart, int quantityOfProductInPromotion) {
+        return quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion == 0;
+    }
+
+    private static boolean isPromotionQuantityNotEqualsProductQuantity(int quantityOfProductInCart, int quantityOfProductInPromotion) {
+        return quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion != 0;
     }
 }

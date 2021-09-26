@@ -7,7 +7,7 @@ package org.kata.sp;
  */
 public class SuperMarket {
     public static void main(String[] args) {
-        System.out.println("Supermarket Pricing");
+        System.out.println("SUPERMARKET PRICING");
 
         System.out.println();
         System.out.println("Add product :");
@@ -20,11 +20,11 @@ public class SuperMarket {
 
         System.out.println();
         System.out.println("Cart review :");
-        Cart.reviewCart();
+        Cart.getShoppingCart().entrySet().forEach(System.out::println);
 
         System.out.println();
         System.out.println("Promotion review :");
-        Cart.reviewPromotion();
+        Stock.getAllProductPromotions().forEach(System.out::println);
 
         System.out.println();
         System.out.print("Calculation of total cart : ");
@@ -36,6 +36,6 @@ public class SuperMarket {
 
         System.out.println();
         System.out.println("Cart review...");
-        Cart.reviewCart();
+        Cart.getShoppingCart().entrySet().forEach(System.out::println);
     }
 }
