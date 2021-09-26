@@ -68,17 +68,23 @@ class TestCart {
         Assertions.assertEquals(0, Cart.getShoppingCart().size());
     }
 
+    @Test
+    @DisplayName("Should return total of shopping cart.")
+    void testWhenCalculateTotalCartPrice() {
+        Cart.setShoppingCart(getProducts());
+        Assertions.assertEquals(23, Cart.calculateTotalOfCart());
+    }
+
     private static Map<Product, Integer> getProducts() {
         Map<Product, Integer> products = new HashMap<>();
         products.put(new Product("A", "pound", 2.5), 10);
-        products.put(new Product("B", "unit", 1.0), 8);
+        products.put(new Product("B", "unit", 1.5), 8);
         return products;
     }
 
     private static List<Promotion> getPromotions() {
         List<Promotion> promotions = new ArrayList<>();
-        promotions.add(new Promotion(5, 3.0, "A"));
-        promotions.add(new Promotion(3, 2.0, "B"));
+        promotions.add(new Promotion(4, 3.0, "A"));
         return promotions;
     }
 }
