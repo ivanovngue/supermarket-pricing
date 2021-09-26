@@ -3,6 +3,7 @@ package org.kata.sp;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * This class is product DTO
@@ -10,6 +11,7 @@ import lombok.Getter;
  * @author Ivan
  */
 @Getter
+@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 public class Product {

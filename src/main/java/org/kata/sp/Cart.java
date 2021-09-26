@@ -89,6 +89,14 @@ public class Cart {
         return totalOfCart;
     }
 
+    public static void reviewCart() {
+        shoppingCart.entrySet().forEach(System.out::println);
+    }
+
+    public static void reviewPromotion() {
+        Stock.getAllProductPromotions().forEach(System.out::println);
+    }
+
     private static Product getProductFromStockIfExist(String productName, int quantity) {
         return getProductFromMapIfExist(Stock.getAllProductsInStock(), productName, quantity);
     }
