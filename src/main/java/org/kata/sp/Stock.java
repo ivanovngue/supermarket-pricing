@@ -1,5 +1,6 @@
 package org.kata.sp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,9 @@ public class Stock {
     }
 
     public static List<Promotion> getAllProductPromotions() {
-        return null;
+        List<Promotion> promotions = new ArrayList<>();
+        promotions.add(new Promotion(3, 3.0, "A"));
+        promotions.add(new Promotion(3, 2.0, "B"));
+        return promotions;
     }
 }

@@ -51,6 +51,44 @@ public class Cart {
         shoppingCart.clear();
     }
 
+    public static double calculateTotalOfCart() {
+        Iterator<Map.Entry<Product, Integer>> products = shoppingCart.entrySet().iterator();
+        double totalOfCart = 0;
+        boolean hasPromotion = false;
+        // Looping into cart
+        while (products.hasNext()) {
+            Map.Entry<Product, Integer> entry = products.next();
+            int quantityOfProductInCart = entry.getValue();
+            double unitPriceOfProductInCart = entry.getKey().getUnitPrice();
+            String nameOfProductInCart = entry.getKey().getProductName();
+            // For each product, we are looking for its promotion
+            for (Promotion promotion : Stock.getAllProductPromotions()) {
+                int quantityOfProductInPromotion = promotion.getQuantity();
+                double priceOfProductInPromotion = promotion.getPriceQuantity();
+                String nameOfProductInPromotion = promotion.getProductName();
+                // Promotion exists if true
+                if (nameOfProductInPromotion.equalsIgnoreCase(nameOfProductInCart)) {
+                    hasPromotion = true;
+                    if (quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion == 0) {
+                        int occurrenceOfPromotion = quantityOfProductInCart / quantityOfProductInPromotion;
+                        totalOfCart = totalOfCart + priceOfProductInPromotion * occurrenceOfPromotion;
+                    } else if (quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion != 0) {
+                        int occurrenceOfPromotion = quantityOfProductInCart % quantityOfProductInPromotion;
+                        totalOfCart = totalOfCart + priceOfProductInPromotion * occurrenceOfPromotion
+                                + (quantityOfProductInCart - occurrenceOfPromotion * quantityOfProductInPromotion) * unitPriceOfProductInCart;
+                    } else {
+                        totalOfCart = totalOfCart + unitPriceOfProductInCart * quantityOfProductInCart;
+                    }
+                }
+            }
+            if (!hasPromotion) {
+                totalOfCart = totalOfCart + unitPriceOfProductInCart * quantityOfProductInCart;
+            }
+            hasPromotion = false;
+        }
+        return totalOfCart;
+    }
+
     private static Product getProductFromStockIfExist(String productName, int quantity) {
         return getProductFromMapIfExist(Stock.getAllProductsInStock(), productName, quantity);
     }
@@ -62,9 +100,7 @@ public class Cart {
     private static Product getProductFromMapIfExist(Map<Product, Integer> productList, String productName, int quantity) {
         Product product = null;
 
-        Iterator products = productList.entrySet().iterator();
-        while (products.hasNext()) {
-            Map.Entry<Product, Integer> entry = (Map.Entry) products.next();
+        for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
             if (productName.equalsIgnoreCase(entry.getKey().getProductName()) && quantity <= entry.getValue()) {
                 product = entry.getKey();
                 break;
