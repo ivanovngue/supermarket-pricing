@@ -15,5 +15,5 @@ import lombok.ToString;
 public class ProductModel {
     private String productName;
     private String billingType;
-    private double unitPrice;
+    private float unitPrice;
 }

@@ -14,8 +14,8 @@ public class PromotionService {
 
     public static List<PromotionModel> getAllPromotions() {
         List<PromotionModel> promotionModels = new ArrayList<>();
-        promotionModels.add(new PromotionModel(3, 3.0, "A"));
-        promotionModels.add(new PromotionModel(3, 2.0, "B"));
+        promotionModels.add(new PromotionModel(3, 3.0f, "A"));
+        promotionModels.add(new PromotionModel(3, 2.0f, "B"));
         return promotionModels;
     }
 }
