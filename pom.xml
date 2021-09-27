@@ -53,7 +53,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.kata.sp.SuperMarket</mainClass>
+                            <mainClass>org.kata.sp.application.SuperMarket</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
