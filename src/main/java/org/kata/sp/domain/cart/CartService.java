@@ -56,20 +56,20 @@ public class CartService {
         shoppingCart.clear();
     }
 
-    public static double calculateTotalOfCart() {
+    public static float calculateTotalOfCart() {
         Iterator<Map.Entry<ProductModel, Integer>> products = shoppingCart.entrySet().iterator();
-        double totalOfCart = 0;
+        float totalOfCart = 0;
         boolean hasPromotion = false;
         // Looping into cart
         while (products.hasNext()) {
             Map.Entry<ProductModel, Integer> entry = products.next();
             int quantityOfProductInCart = entry.getValue();
-            double unitPriceOfProductInCart = entry.getKey().getUnitPrice();
+            float unitPriceOfProductInCart = entry.getKey().getUnitPrice();
             String nameOfProductInCart = entry.getKey().getProductName();
             // For each product, we are looking for its promotion
             for (PromotionModel promotionModel : getAllPromotions()) {
                 int quantityOfProductInPromotion = promotionModel.getQuantity();
-                double priceOfProductInPromotion = promotionModel.getPriceQuantity();
+                float priceOfProductInPromotion = promotionModel.getPriceQuantity();
                 String nameOfProductInPromotion = promotionModel.getProductName();
                 // Promotion exists if true
                 if (nameOfProductInPromotion.equalsIgnoreCase(nameOfProductInCart)) {
