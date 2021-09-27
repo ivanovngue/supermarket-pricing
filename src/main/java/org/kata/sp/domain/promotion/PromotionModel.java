@@ -14,6 +14,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PromotionModel {
     private int quantity;
-    private double priceQuantity;
+    private float priceQuantity;
     private String productName;
 }

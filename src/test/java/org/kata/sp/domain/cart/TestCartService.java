@@ -82,14 +82,14 @@ class TestCartService {
 
     private static Map<ProductModel, Integer> getProducts() {
         Map<ProductModel, Integer> products = new HashMap<>();
-        products.put(new ProductModel("A", "pound", 2.5), 10);
-        products.put(new ProductModel("B", "unit", 1.5), 8);
+        products.put(new ProductModel("A", "pound", 2.5f), 10);
+        products.put(new ProductModel("B", "unit", 1.5f), 8);
         return products;
     }
 
     private static List<PromotionModel> getPromotions() {
         List<PromotionModel> promotionModels = new ArrayList<>();
-        promotionModels.add(new PromotionModel(4, 3.0, "A"));
+        promotionModels.add(new PromotionModel(4, 3.0f, "A"));
         return promotionModels;
     }
 }
