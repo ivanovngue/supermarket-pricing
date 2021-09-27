@@ -1,10 +1,8 @@
 # supermarket-pricing
 
-
-
 ### Run class
 
-To run it, you can just execute the main class : org.kata.sp.SuperMarket.
+To run it, you can just execute the main class : org.kata.sp.application.SuperMarket.
 
 ### Run Jar file
 

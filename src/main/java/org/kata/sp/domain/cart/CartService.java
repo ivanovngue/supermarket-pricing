@@ -1,32 +1,37 @@
-package org.kata.sp;
+package org.kata.sp.domain.cart;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.kata.sp.domain.product.ProductModel;
+import org.kata.sp.domain.promotion.PromotionModel;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static org.kata.sp.domain.product.ProductService.getAllProducts;
+import static org.kata.sp.domain.promotion.PromotionService.getAllPromotions;
+
 /**
- * This class is used to cart
+ * This class is used to manage the cart
  *
  * @author Ivan
  */
-public class Cart {
+public class CartService {
 
     @Setter
     @Getter
-    private static Map<Product, Integer> shoppingCart = new HashMap<>();
+    private static Map<ProductModel, Integer> shoppingCart = new HashMap<>();
 
-    private Cart() {
+    private CartService() {
     }
 
     public static boolean addProductToCart(String productName, int quantity) {
         boolean hasBeenAdded = false;
-        Product product = getProductFromStockIfExist(productName, quantity);
+        ProductModel productModel = getProductFromStockIfExist(productName, quantity);
 
-        if (product != null) {
-            shoppingCart.put(product, quantity);
+        if (productModel != null) {
+            shoppingCart.put(productModel, quantity);
             hasBeenAdded = true;
         }
         return hasBeenAdded;
@@ -34,13 +39,13 @@ public class Cart {
 
     public static boolean removeProductFromCart(String productName, int quantity) {
         boolean hasBeenRemoved = false;
-        Product product = getProductFromCartIfExist(productName);
+        ProductModel productModel = getProductFromCartIfExist(productName);
 
-        if (product != null) {
-            if (quantity >= shoppingCart.get(product)) {
-                shoppingCart.remove(product);
+        if (productModel != null) {
+            if (quantity >= shoppingCart.get(productModel)) {
+                shoppingCart.remove(productModel);
             } else {
-                shoppingCart.put(product, Cart.getShoppingCart().get(product) - quantity);
+                shoppingCart.put(productModel, CartService.getShoppingCart().get(productModel) - quantity);
             }
             hasBeenRemoved = true;
         }
@@ -52,20 +57,20 @@ public class Cart {
     }
 
     public static double calculateTotalOfCart() {
-        Iterator<Map.Entry<Product, Integer>> products = shoppingCart.entrySet().iterator();
+        Iterator<Map.Entry<ProductModel, Integer>> products = shoppingCart.entrySet().iterator();
         double totalOfCart = 0;
         boolean hasPromotion = false;
         // Looping into cart
         while (products.hasNext()) {
-            Map.Entry<Product, Integer> entry = products.next();
+            Map.Entry<ProductModel, Integer> entry = products.next();
             int quantityOfProductInCart = entry.getValue();
             double unitPriceOfProductInCart = entry.getKey().getUnitPrice();
             String nameOfProductInCart = entry.getKey().getProductName();
             // For each product, we are looking for its promotion
-            for (Promotion promotion : Stock.getAllProductPromotions()) {
-                int quantityOfProductInPromotion = promotion.getQuantity();
-                double priceOfProductInPromotion = promotion.getPriceQuantity();
-                String nameOfProductInPromotion = promotion.getProductName();
+            for (PromotionModel promotionModel : getAllPromotions()) {
+                int quantityOfProductInPromotion = promotionModel.getQuantity();
+                double priceOfProductInPromotion = promotionModel.getPriceQuantity();
+                String nameOfProductInPromotion = promotionModel.getProductName();
                 // Promotion exists if true
                 if (nameOfProductInPromotion.equalsIgnoreCase(nameOfProductInCart)) {
                     hasPromotion = true;
@@ -89,24 +94,24 @@ public class Cart {
         return totalOfCart;
     }
 
-    private static Product getProductFromStockIfExist(String productName, int quantity) {
-        return getProductFromMapIfExist(Stock.getAllProductsInStock(), productName, quantity);
+    private static ProductModel getProductFromStockIfExist(String productName, int quantity) {
+        return getProductFromMapIfExist(getAllProducts(), productName, quantity);
     }
 
-    private static Product getProductFromCartIfExist(String productName) {
+    private static ProductModel getProductFromCartIfExist(String productName) {
         return getProductFromMapIfExist(shoppingCart, productName, 0);
     }
 
-    private static Product getProductFromMapIfExist(Map<Product, Integer> productList, String productName, int quantity) {
-        Product product = null;
+    private static ProductModel getProductFromMapIfExist(Map<ProductModel, Integer> productList, String productName, int quantity) {
+        ProductModel productModel = null;
 
-        for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
+        for (Map.Entry<ProductModel, Integer> entry : productList.entrySet()) {
             if (productName.equalsIgnoreCase(entry.getKey().getProductName()) && quantity <= entry.getValue()) {
-                product = entry.getKey();
+                productModel = entry.getKey();
                 break;
             }
         }
-        return product;
+        return productModel;
     }
 
     private static boolean isPromotionQuantityEqualsProductQuantity(int quantityOfProductInCart, int quantityOfProductInPromotion) {

@@ -1,20 +1,18 @@
-package org.kata.sp;
+package org.kata.sp.domain.product;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
- * This class is product DTO
+ * This class is product model
  *
  * @author Ivan
  */
 @Getter
 @ToString
-@EqualsAndHashCode
 @AllArgsConstructor
-public class Product {
+public class ProductModel {
     private String productName;
     private String billingType;
     private double unitPrice;
