@@ -62,10 +62,10 @@ public class CartService {
         while (products.hasNext()) {
             Map.Entry<ProductModel, Integer> entry = products.next();
             int quantityOfProductInCart = entry.getValue();
-            float unitPriceOfProductInCart = entry.getKey().getUnitPrice();
+            float priceOfProductInCart = entry.getKey().getUnitPrice();
             Promotion promotion = entry.getKey().getPromotion();
 
-            totalOfCart = totalOfCart + promotion.calculatePromotion(unitPriceOfProductInCart, quantityOfProductInCart);
+            totalOfCart = totalOfCart + promotion.calculatePromotion(priceOfProductInCart, quantityOfProductInCart);
         }
         return totalOfCart;
     }
