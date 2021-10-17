@@ -9,6 +9,18 @@ package org.kata.sp.domain.discount;
 public class PromotionBuyThreeForADollar implements Promotion {
     @Override
     public float calculatePromotion(float unitPrice, Integer quantity) {
-        return 0;
+        float totalPromotion = 0f;
+        int occurrenceOfPromotion = quantity % 3;
+        if (quantity >= 3) {
+            if (occurrenceOfPromotion == 0) {
+                totalPromotion = quantity / 3;
+            }
+            if (occurrenceOfPromotion > 0) {
+                totalPromotion = (quantity / 3) + (occurrenceOfPromotion * unitPrice);
+            }
+        } else {
+            totalPromotion = quantity * unitPrice;
+        }
+        return totalPromotion;
     }
 }

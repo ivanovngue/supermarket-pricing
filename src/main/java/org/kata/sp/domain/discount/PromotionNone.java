@@ -9,6 +9,6 @@ package org.kata.sp.domain.discount;
 public class PromotionNone implements Promotion {
     @Override
     public float calculatePromotion(float unitPrice, Integer quantity) {
-        return 0;
+        return quantity * unitPrice;
     }
 }
