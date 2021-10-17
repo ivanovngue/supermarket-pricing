@@ -12,7 +12,6 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -142,9 +141,7 @@ class TestCartService {
 
     private static int getQuantityOfProductInCart(String productName) {
         int quantityTest = 0;
-        Iterator<Map.Entry<ProductModel, Integer>> products = CartService.getShoppingCart().entrySet().iterator();
-        while (products.hasNext()) {
-            Map.Entry<ProductModel, Integer> entry = products.next();
+        for (Map.Entry<ProductModel, Integer> entry : CartService.getShoppingCart().entrySet()) {
             if (entry.getKey().getProductName().equalsIgnoreCase(productName)) {
                 quantityTest = entry.getValue();
             }
