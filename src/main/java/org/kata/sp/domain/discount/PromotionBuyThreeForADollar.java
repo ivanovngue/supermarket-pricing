@@ -12,9 +12,11 @@ public class PromotionBuyThreeForADollar implements Promotion {
         float totalPromotion = 0f;
         int occurrenceOfPromotion = quantity % 3;
         if (quantity >= 3) {
+            // quantity is a multiple of three
             if (occurrenceOfPromotion == 0) {
                 totalPromotion = quantity / 3;
             }
+            // quantity is not a multiple of three
             if (occurrenceOfPromotion > 0) {
                 totalPromotion = (quantity / 3) + (occurrenceOfPromotion * unitPrice);
             }

@@ -2,7 +2,7 @@ package org.kata.sp.domain.discount;
 
 /**
  * This class Implements promotion : "buy one, get one for free"
- * The second item has a price
+ * Buy two and the second one is free
  *
  * @author Ivan
  */
@@ -12,9 +12,11 @@ public class PromotionBuyOneGetOneFree implements Promotion {
         float totalPromotion = 0f;
         int occurrenceOfPromotion = quantity % 2;
         if (quantity >= 2) {
+            // quantity is a multiple of two
             if (occurrenceOfPromotion == 0) {
                 totalPromotion = (quantity / 2) * unitPrice;
             }
+            // quantity is not a multiple of two
             if (occurrenceOfPromotion > 0) {
                 totalPromotion = (((quantity - 1) / 2) * unitPrice) + unitPrice;
             }
