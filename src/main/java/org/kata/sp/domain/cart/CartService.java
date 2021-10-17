@@ -2,15 +2,14 @@ package org.kata.sp.domain.cart;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.kata.sp.domain.discount.Promotion;
 import org.kata.sp.domain.product.ProductModel;
-import org.kata.sp.domain.promotion.PromotionModel;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import static org.kata.sp.domain.product.ProductService.getAllProducts;
-import static org.kata.sp.domain.promotion.PromotionService.getAllPromotions;
 
 /**
  * This class is used to manage the cart
@@ -30,7 +29,7 @@ public class CartService {
         boolean hasBeenAdded = false;
         ProductModel productModel = getProductFromStockIfExist(productName, quantity);
 
-        if (productModel != null) {
+        if (productModel != null && quantity > 0) {
             shoppingCart.put(productModel, quantity);
             hasBeenAdded = true;
         }
@@ -58,38 +57,15 @@ public class CartService {
 
     public static float calculateTotalOfCart() {
         Iterator<Map.Entry<ProductModel, Integer>> products = shoppingCart.entrySet().iterator();
-        float totalOfCart = 0;
-        boolean hasPromotion = false;
+        float totalOfCart = 0f;
         // Looping into cart
         while (products.hasNext()) {
             Map.Entry<ProductModel, Integer> entry = products.next();
             int quantityOfProductInCart = entry.getValue();
             float unitPriceOfProductInCart = entry.getKey().getUnitPrice();
-            String nameOfProductInCart = entry.getKey().getProductName();
-            // For each product, we are looking for its promotion
-            for (PromotionModel promotionModel : getAllPromotions()) {
-                int quantityOfProductInPromotion = promotionModel.getQuantity();
-                float priceOfProductInPromotion = promotionModel.getPriceQuantity();
-                String nameOfProductInPromotion = promotionModel.getProductName();
-                // Promotion exists if true
-                if (nameOfProductInPromotion.equalsIgnoreCase(nameOfProductInCart)) {
-                    hasPromotion = true;
-                    if (isPromotionQuantityEqualsProductQuantity(quantityOfProductInCart, quantityOfProductInPromotion)) {
-                        int occurrenceOfPromotion = quantityOfProductInCart / quantityOfProductInPromotion;
-                        totalOfCart = totalOfCart + priceOfProductInPromotion * occurrenceOfPromotion;
-                    } else if (isPromotionQuantityNotEqualsProductQuantity(quantityOfProductInCart, quantityOfProductInPromotion)) {
-                        int occurrenceOfPromotion = quantityOfProductInCart % quantityOfProductInPromotion;
-                        totalOfCart = totalOfCart + priceOfProductInPromotion * occurrenceOfPromotion
-                                + (quantityOfProductInCart - occurrenceOfPromotion * quantityOfProductInPromotion) * unitPriceOfProductInCart;
-                    } else {
-                        totalOfCart = totalOfCart + unitPriceOfProductInCart * quantityOfProductInCart;
-                    }
-                }
-            }
-            if (!hasPromotion) {
-                totalOfCart = totalOfCart + unitPriceOfProductInCart * quantityOfProductInCart;
-            }
-            hasPromotion = false;
+            Promotion promotion = entry.getKey().getPromotion();
+
+            totalOfCart = totalOfCart + promotion.calculatePromotion(unitPriceOfProductInCart, quantityOfProductInCart);
         }
         return totalOfCart;
     }
@@ -112,13 +88,5 @@ public class CartService {
             }
         }
         return productModel;
-    }
-
-    private static boolean isPromotionQuantityEqualsProductQuantity(int quantityOfProductInCart, int quantityOfProductInPromotion) {
-        return quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion == 0;
-    }
-
-    private static boolean isPromotionQuantityNotEqualsProductQuantity(int quantityOfProductInCart, int quantityOfProductInPromotion) {
-        return quantityOfProductInCart >= quantityOfProductInPromotion && quantityOfProductInCart % quantityOfProductInPromotion != 0;
     }
 }

@@ -2,8 +2,6 @@ package org.kata.sp.application;
 
 import org.kata.sp.domain.cart.CartService;
 
-import static org.kata.sp.domain.promotion.PromotionService.getAllPromotions;
-
 /**
  * This is the main class and user side
  *
@@ -27,10 +25,6 @@ public class SuperMarket {
         System.out.println();
         System.out.println("Cart review");
         CartService.getShoppingCart().entrySet().forEach(System.out::println);
-
-        System.out.println();
-        System.out.println("Promotion review");
-        getAllPromotions().forEach(System.out::println);
 
         System.out.println();
         System.out.print("Calculation of total cart : ");
